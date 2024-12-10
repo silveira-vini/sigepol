@@ -2,7 +2,6 @@ package silveira.vinicius.sigepol.domain.policial;
 
 import jakarta.persistence.*;
 import lombok.*;
-import silveira.vinicius.sigepol.domain.dadosFuncionais.DadosFuncionais;
 import silveira.vinicius.sigepol.domain.endereco.Endereco;
 import silveira.vinicius.sigepol.domain.formacao.Formacao;
 
@@ -26,13 +25,16 @@ public class Policial {
     private Date nascimento;
     private String nomeMae;
     private String nomePai;
-    @Embedded
-    private Endereco endereco;
-    @Embedded
-    private DadosFuncionais dadosFuncionais;
+    private String patente;
+    private String nomeDeGuerra;
+    private String lotacao;
+    private Integer matricula;
+    private Date dataIncorporacao;
+    private boolean ativo;
     @Embedded
     private Formacao formacao;
-    private boolean ativo;
+    @Embedded
+    private Endereco endereco;
 
 
 }
