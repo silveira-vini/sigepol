@@ -9,17 +9,18 @@ import java.util.Date;
 
 @Table(name = "policial")
 @Entity(name = "Policial")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Policial {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String nome;
     private String cpf;
     private String email;
     private Date nascimento;
@@ -35,6 +36,26 @@ public class Policial {
     private Formacao formacao;
     @Embedded
     private Endereco endereco;
+
+
+    public Policial(PolicialCadastroDTO dados) {
+        this.nome = dados.nome();
+        this.cpf = dados.cpf();
+        this.email = dados.email();
+        this.nascimento = dados.nascimento();
+        this.nomeMae = dados.nomeMae();
+        this.nomePai = dados.nomePai();
+        this.patente = dados.patente();
+        this.nomeDeGuerra = dados.nomeDeGuerra();
+        this.lotacao = dados.lotacao();
+        this.matricula = dados.matricula();
+        this.dataIncorporacao = dados.dataIncorporacao();
+        this.ativo = true;
+        this.formacao = new Formacao(dados.formacao());
+        this.endereco = new Endereco(dados.endereco());
+    }
+
+
 
 
 }
