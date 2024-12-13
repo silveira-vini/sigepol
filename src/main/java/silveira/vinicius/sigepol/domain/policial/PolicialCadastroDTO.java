@@ -17,7 +17,6 @@ public record PolicialCadastroDTO(
         @Email(message = "Formato do email é inválido")
         String email,
         @Past(message = "A data de nascimento deve ser no passado")
-        @Pattern(regexp = "^\\d{2}/\\d{2}/\\d{4}$", message = "Formato da data de nascimento inválido. Utilize dd/mm/aaaa")
         Date nascimento,
         String nomeMae,
         String nomePai,
@@ -28,9 +27,8 @@ public record PolicialCadastroDTO(
         @NotBlank(message = "Lotação atual é obrigatória")
         String lotacao,
         @NotBlank(message = "Matrícula é obrigatória")
-        Integer matricula,
+        String matricula,
         @Past(message = "A data da incorporação deve ser no passado")
-        @Pattern(regexp = "^\\d{2}/\\d{2}/\\d{4}$", message = "Formato da data de nascimento inválido. Utilize dd/mm/aaaa")
         Date dataIncorporacao,
         @NotNull(message = "Dados de formação são obrigatórios")
         @Valid

@@ -15,7 +15,7 @@ public record PolicialDadosDetalhadoDTO(
         String patente,
         String nomeDeGuerra,
         String lotacao,
-        Integer matricula,
+        String matricula,
         Date dataIncorporacao,
         Formacao formacao,
         Endereco endereco) {

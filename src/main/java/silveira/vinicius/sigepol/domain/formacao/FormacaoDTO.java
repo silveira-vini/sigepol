@@ -11,6 +11,6 @@ public record FormacaoDTO(
         @NotNull(message = "Informe se concluído")
         Boolean concluido,
         @NotBlank(message = "Informe o ano de conclusão")
-        Integer anoConclusao
+        String anoConclusao
 ) {
 }

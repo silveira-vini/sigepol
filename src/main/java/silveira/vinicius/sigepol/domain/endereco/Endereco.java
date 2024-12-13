@@ -23,7 +23,7 @@ public class Endereco {
     private String uf;
     private String cep;
 
-    public Endereco(@NotNull(message = "Dados do endereço são obrigatórios") @Valid EnderecoDTO endereco) {
+    public Endereco(EnderecoDTO endereco) {
         this.logradouro = endereco.logradouro();
         this.numero = endereco.numero();
         this.complemento = endereco.complemento();

@@ -1,8 +1,12 @@
 package silveira.vinicius.sigepol.controller;
 
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,7 +23,8 @@ public class PolicialController {
     private PolicialRepository repository;
 
     @PostMapping
-    public ResponseEntity cadastrar(PolicialCadastroDTO dados, UriComponentsBuilder uriBuilder) {
+    @Transactional
+    public ResponseEntity cadastrar(@RequestBody @Valid PolicialCadastroDTO dados, UriComponentsBuilder uriBuilder) {
         var policial = new Policial(dados);
         repository.save(policial);
         var uri = uriBuilder.path("policial/{id}").buildAndExpand(policial.getId()).toUri();

@@ -29,7 +29,7 @@ public class Policial {
     private String patente;
     private String nomeDeGuerra;
     private String lotacao;
-    private Integer matricula;
+    private String matricula;
     private Date dataIncorporacao;
     private boolean ativo;
     @Embedded
@@ -54,8 +54,4 @@ public class Policial {
         this.formacao = new Formacao(dados.formacao());
         this.endereco = new Endereco(dados.endereco());
     }
-
-
-
-
 }
