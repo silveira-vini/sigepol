@@ -1,0 +1,2 @@
+ALTER TABLE policial
+    MODIFY COLUMN patente VARCHAR(15);
