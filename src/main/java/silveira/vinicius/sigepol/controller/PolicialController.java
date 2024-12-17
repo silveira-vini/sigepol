@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import silveira.vinicius.sigepol.domain.policial.PolicialCadastroDTO;
 import silveira.vinicius.sigepol.domain.policial.PolicialDadosDetalhadoDTO;
 import silveira.vinicius.sigepol.domain.policial.PolicialListagemDTO;
-import silveira.vinicius.sigepol.servive.PolicialService;
+import silveira.vinicius.sigepol.service.PolicialService;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
