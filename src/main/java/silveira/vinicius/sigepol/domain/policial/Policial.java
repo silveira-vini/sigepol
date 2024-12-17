@@ -1,6 +1,7 @@
 package silveira.vinicius.sigepol.domain.policial;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 import silveira.vinicius.sigepol.domain.endereco.Endereco;
 import silveira.vinicius.sigepol.domain.formacao.Formacao;
@@ -53,5 +54,21 @@ public class Policial {
         this.ativo = true;
         this.formacao = new Formacao(dados.formacao());
         this.endereco = new Endereco(dados.endereco());
+    }
+
+    public void atualizar(@Valid PolicialCadastroDTO dados) {
+        if (dados.nome() != null) this.nome = dados.nome();
+        if (dados.cpf() != null) this.cpf = dados.cpf();
+        if (dados.email() != null) this.email = dados.email();
+        if (dados.nascimento() != null) this.nascimento = dados.nascimento();
+        if (dados.nomeMae() != null) this.nomeMae = dados.nomeMae();
+        if (dados.nomePai() != null) this.nomePai = dados.nomePai();
+        if (dados.patente() != null) this.patente = dados.patente();
+        if (dados.nomeDeGuerra() != null) this.nomeDeGuerra = dados.nomeDeGuerra();
+        if (dados.lotacao() != null) this.lotacao = dados.lotacao();
+        if (dados.matricula() != null) this.matricula = dados.matricula();
+        if (dados.dataIncorporacao() != null) this.dataIncorporacao = dados.dataIncorporacao();
+        if (dados.formacao() != null) this.formacao.atualizarFormacao(dados.formacao());
+        if (dados.endereco() != null) this.endereco.atualizarEndereco(dados.endereco());
     }
 }

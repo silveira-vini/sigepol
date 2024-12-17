@@ -1,5 +1,6 @@
 package silveira.vinicius.sigepol.service;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,22 @@ public class PolicialService {
                 .map(p -> new PolicialListagemDTO(p.getPatente(), p.getNomeDeGuerra(), p.getMatricula()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(policiais);
+    }
+
+    public ResponseEntity<PolicialDadosDetalhadoDTO> buscarPorId(Long id) {
+        var policial = repository.findById(id);
+        return policial.map(p -> ResponseEntity.ok(new PolicialDadosDetalhadoDTO(p)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(Long id, @Valid PolicialCadastroDTO dados) {
+        var policial = repository.findById(id);
+        if (policial.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var p = policial.get();
+        p.atualizar(dados);
+        repository.save(p);
+        return ResponseEntity.ok(new PolicialDadosDetalhadoDTO(p));
     }
 }

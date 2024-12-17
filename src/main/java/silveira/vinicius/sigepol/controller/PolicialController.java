@@ -34,4 +34,17 @@ public class PolicialController {
         return policialService.listarTodos(pagina, itens);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PolicialDadosDetalhadoDTO> detalhar(@PathVariable Long id) {
+        return policialService.buscarPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid PolicialCadastroDTO dados) {
+        return policialService.atualizar(id, dados);
+    }
+
+
+
+
 }
