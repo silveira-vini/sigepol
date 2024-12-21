@@ -56,7 +56,7 @@ public class Policial {
         this.endereco = new Endereco(dados.endereco());
     }
 
-    public void atualizar(@Valid PolicialCadastroDTO dados) {
+    public void atualizar(@Valid PolicialAtualizacaoDTO dados) {
         if (dados.nome() != null) this.nome = dados.nome();
         if (dados.cpf() != null) this.cpf = dados.cpf();
         if (dados.email() != null) this.email = dados.email();
@@ -70,5 +70,9 @@ public class Policial {
         if (dados.dataIncorporacao() != null) this.dataIncorporacao = dados.dataIncorporacao();
         if (dados.formacao() != null) this.formacao.atualizarFormacao(dados.formacao());
         if (dados.endereco() != null) this.endereco.atualizarEndereco(dados.endereco());
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

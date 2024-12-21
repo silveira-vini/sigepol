@@ -1,12 +1,12 @@
 package silveira.vinicius.sigepol.controller;
 
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import silveira.vinicius.sigepol.domain.policial.PolicialAtualizacaoDTO;
 import silveira.vinicius.sigepol.domain.policial.PolicialCadastroDTO;
 import silveira.vinicius.sigepol.domain.policial.PolicialDadosDetalhadoDTO;
 import silveira.vinicius.sigepol.domain.policial.PolicialListagemDTO;
@@ -20,8 +20,12 @@ import java.util.List;
 @RequestMapping("/policial")
 public class PolicialController {
 
+    private final PolicialService policialService;
+
     @Autowired
-    private PolicialService policialService;
+    public PolicialController(PolicialService policialService) {
+        this.policialService = policialService;
+    }
 
     @PostMapping
     @Transactional
@@ -40,11 +44,14 @@ public class PolicialController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid PolicialCadastroDTO dados) {
+    @Transactional
+    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid PolicialAtualizacaoDTO dados) {
         return policialService.atualizar(id, dados);
     }
 
-
-
-
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable Long id) {
+        return policialService.deletar(id);
+    }
 }

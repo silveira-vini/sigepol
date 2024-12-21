@@ -6,10 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriBuilder;
-import silveira.vinicius.sigepol.domain.policial.Policial;
-import silveira.vinicius.sigepol.domain.policial.PolicialCadastroDTO;
-import silveira.vinicius.sigepol.domain.policial.PolicialDadosDetalhadoDTO;
-import silveira.vinicius.sigepol.domain.policial.PolicialListagemDTO;
+import silveira.vinicius.sigepol.domain.policial.*;
 import silveira.vinicius.sigepol.repositories.PolicialRepository;
 
 import java.net.MalformedURLException;
@@ -27,15 +24,11 @@ public class PolicialService {
         this.repository = repository;
     }
 
-    public ResponseEntity<PolicialDadosDetalhadoDTO> cadastrarPolicial(PolicialCadastroDTO dados, UriBuilder uriBuilder) {
-        try {
-            var policial = new Policial(dados);
-            repository.save(policial);
-            var uri = uriBuilder.path("policial/{id}").build(policial.getId()).toURL();
-            return ResponseEntity.created(uri.toURI()).body(new PolicialDadosDetalhadoDTO(policial));
-        } catch (MalformedURLException | URISyntaxException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<PolicialDadosDetalhadoDTO> cadastrarPolicial(PolicialCadastroDTO dados, UriBuilder uriBuilder) throws MalformedURLException, URISyntaxException {
+        var policial = new Policial(dados);
+        repository.save(policial);
+        var uri = uriBuilder.path("policial/{id}").build(policial.getId()).toURL();
+        return ResponseEntity.created(uri.toURI()).body(new PolicialDadosDetalhadoDTO(policial));
     }
 
     public ResponseEntity<List<PolicialListagemDTO>> listarTodos(int pagina, int itens) {
@@ -55,7 +48,7 @@ public class PolicialService {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(Long id, @Valid PolicialCadastroDTO dados) {
+    public ResponseEntity<PolicialDadosDetalhadoDTO> atualizar(Long id, @Valid PolicialAtualizacaoDTO dados) {
         var policial = repository.findById(id);
         if (policial.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -64,5 +57,16 @@ public class PolicialService {
         p.atualizar(dados);
         repository.save(p);
         return ResponseEntity.ok(new PolicialDadosDetalhadoDTO(p));
+    }
+
+    public ResponseEntity deletar(Long id) {
+        var policial = repository.findById(id);
+        if (policial.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var p = policial.get();
+        p.excluir();
+        repository.save(p);
+        return ResponseEntity.noContent().build();
     }
 }
