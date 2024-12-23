@@ -21,6 +21,7 @@ public class Viatura {
     private String modelo;
     private String ano;
     private String km;
+    private boolean ativo;
 
 
     public Viatura (ViaturaCadastroDTO dados) {
@@ -30,5 +31,6 @@ public class Viatura {
         this.modelo = dados.modelo();
         this.ano = dados.ano();
         this.km = dados.km();
+        this.ativo = true;
     }
 }

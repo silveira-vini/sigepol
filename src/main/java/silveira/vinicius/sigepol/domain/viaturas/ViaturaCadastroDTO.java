@@ -14,3 +14,5 @@ public record ViaturaCadastroDTO(
         @NotBlank(message = "Km é obrigatório")
         String km) {
 }
+
+
