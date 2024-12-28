@@ -1,14 +1,12 @@
 package silveira.vinicius.sigepol.service;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
-import silveira.vinicius.sigepol.domain.viaturas.Viatura;
-import silveira.vinicius.sigepol.domain.viaturas.ViaturaCadastroDTO;
-import silveira.vinicius.sigepol.domain.viaturas.ViaturaDadosDetalhadoDTO;
-import silveira.vinicius.sigepol.domain.viaturas.ViaturaListagemDTO;
+import silveira.vinicius.sigepol.domain.viaturas.*;
 import silveira.vinicius.sigepol.repositories.ViaturaRepository;
 
 import java.net.MalformedURLException;
@@ -32,7 +30,26 @@ public class ViaturaService {
 
     public ResponseEntity<Page<ViaturaListagemDTO>> listarViaturas(Pageable pageable) {
         var page = viaturaRepository.findAllByAtivoTrue(pageable)
-                .map(v -> new ViaturaListagemDTO(v.getPlaca(), v.getPrefixo(), v.getMarca(), v.getModelo(), v.getAno()));
+                .map(v -> new ViaturaListagemDTO(v.getPrefixo(), v.getMarca(), v.getModelo()));
         return ResponseEntity.ok(page);
+    }
+
+    public ResponseEntity<ViaturaDadosDetalhadoDTO> detalharViatura(Long id) {
+        var viatura = viaturaRepository.findById(id).orElseThrow();
+        return ResponseEntity.ok(new ViaturaDadosDetalhadoDTO(viatura));
+    }
+
+    public ResponseEntity<ViaturaDadosDetalhadoDTO> atualizarViatura(Long id, @Valid ViaturaAtualizacaoDTO dados) {
+        var viatura = viaturaRepository.findById(id).orElseThrow();
+        viatura.atualizar(dados);
+        viaturaRepository.save(viatura);
+        return ResponseEntity.ok(new ViaturaDadosDetalhadoDTO(viatura));
+    }
+
+    public ResponseEntity<?> deletarViatura(Long id) {
+        var viatura = viaturaRepository.findById(id).orElseThrow();
+        viatura.desativar();
+        viaturaRepository.save(viatura);
+        return ResponseEntity.noContent().build();
     }
 }

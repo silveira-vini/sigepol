@@ -1,6 +1,7 @@
 package silveira.vinicius.sigepol.domain.viaturas;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 @Table (name = "viaturas")
@@ -32,5 +33,18 @@ public class Viatura {
         this.ano = dados.ano();
         this.km = dados.km();
         this.ativo = true;
+    }
+
+    public void atualizar(@Valid ViaturaAtualizacaoDTO dados) {
+        if (dados.placa() != null) this.placa = dados.placa();
+        if (dados.prefixo() != null) this.prefixo = dados.prefixo();
+        if (dados.marca() != null) this.marca = dados.marca();
+        if (dados.modelo() != null) this.modelo = dados.modelo();
+        if (dados.ano() != null) this.ano = dados.ano();
+        if (dados.km() != null) this.km = dados.km();
+    }
+
+    public void desativar() {
+        this.ativo = false;
     }
 }
