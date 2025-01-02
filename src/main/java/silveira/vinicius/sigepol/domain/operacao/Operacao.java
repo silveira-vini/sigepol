@@ -32,5 +32,14 @@ public class Operacao {
     @JoinColumn(name = "viatura_id")
     private Viatura viatura;
 
+    public Operacao(OperacaoCadastroDTO dados, Policial responsavel, Viatura viatura) {
+        this.nome = dados.nome();
+        this.descricao = dados.descricao();
+        this.data = dados.data();
+        this.local = dados.local();
+        this.responsavel = responsavel;
+        this.viatura = viatura;
+
+    }
 }
 
